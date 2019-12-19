@@ -18,8 +18,15 @@ es.indices.create(
                             "type": "custom",
                             "tokenizer": "nori_tokenizer"
                         }
+                    },
+                    "normalizer":{
+                        "lowercase_normalizer":{
+                            "type":"custom",
+                            "char_filter":[],
+                            "filter":["lowercase","asciifolding"]
+                        }
                     }
-                }
+                }                
             }
         },
         "mappings": {
@@ -30,19 +37,23 @@ es.indices.create(
                     },
                     "main_title": {
                         "type": "text",
-                        "analyzer": "my_analyzer"
+                        "analyzer": "my_analyzer",
+                        "normalizer": "lowercase_normalizer"
                     },
                     "sub_title": {
                         "type": "text",
-                        "analyzer": "my_analyzer"
+                        "analyzer": "my_analyzer",
+                        "normalizer": "lowercase_normalizer"
                     },
                     "title": {
                         "type": "text",
-                        "analyzer": "my_analyzer"
+                        "analyzer": "my_analyzer",
+                        "normalizer": "lowercase_normalizer"
                     },
                     "content": {
                         "type": "text",
-                        "analyzer": "my_analyzer"
+                        "analyzer": "my_analyzer",
+                        "normalizer": "lowercase_normalizer"
                     }
                 }
             }
