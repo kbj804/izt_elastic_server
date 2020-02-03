@@ -17,13 +17,14 @@ es.indices.create(
                         "my_analyzer": {
                             "type": "custom",
                             "tokenizer": "nori_tokenizer"
+                            ,"filter":["lowercase"]
                         }
                     },
                     "normalizer":{
                         "lowercase_normalizer":{
                             "type":"custom",
-                            "char_filter":[],
-                            "filter":["lowercase","asciifolding"]
+                            #"char_filter":[],
+                            "filter":["lowercase"]
                         }
                     }
                 }                
@@ -36,24 +37,24 @@ es.indices.create(
                         "type": "text"
                     },
                     "main_title": {
-                        "type": "text",
-                        "analyzer": "my_analyzer",
-                        "normalizer": "lowercase_normalizer"
+                        "type": "text"
+                        ,"analyzer": "my_analyzer"
+                        #,"normalizer": "lowercase_normalizer"
                     },
                     "sub_title": {
-                        "type": "text",
-                        "analyzer": "my_analyzer",
-                        "normalizer": "lowercase_normalizer"
+                        "type": "text"
+                        ,"analyzer": "my_analyzer"
+                        #,"normalizer": "lowercase_normalizer"
                     },
                     "title": {
-                        "type": "text",
-                        "analyzer": "my_analyzer",
-                        "normalizer": "lowercase_normalizer"
+                        "type": "text"
+                        ,"analyzer": "my_analyzer"
+                        #,"normalizer": "lowercase_normalizer"
                     },
                     "content": {
                         "type": "text",
-                        "analyzer": "my_analyzer",
-                        "normalizer": "lowercase_normalizer"
+                        "analyzer": "my_analyzer"
+                        #,"normalizer": "lowercase_normalizer"
                     }
                 }
             }
@@ -65,5 +66,5 @@ body =""
 for i in json_data:
     body = body + json.dumps({"index": {"_index": "menual", "_type": "menual_datas"}}) + '\n'
     body = body + json.dumps(i, ensure_ascii=False) + '\n'
-
+print(body)
 es.bulk(body)

@@ -19,9 +19,13 @@ from django.urls import path
 
 #url의 설정한 부분까지 잘라내고 남은 문자열 부분의 후속 처리를 위해 search_app의 urls.py와 연결해줍니다.
 # 이제 Django는 http://127.0.0.1:8000/로 들어오는 모든 접속 요청을 search_app.urls로 전송해 추가 명령을 찾을 것입니다.
-from django.conf.urls import include  
+from django.conf.urls import include, url
   
 urlpatterns = [  
-    path('admin/', admin.site.urls),  
-    path('', include('search_app.urls')),  
+    #path('admin/', admin.site.urls),  
+    path('search_app/', include('search_app.urls')),  # include 함수는 다른 URLconf를 참조할 수 있도록 도와줌
+    url(r'^chat/', include('chat.urls')),
+    url(r'^admin/', admin.site.urls),
+    
+
 ]

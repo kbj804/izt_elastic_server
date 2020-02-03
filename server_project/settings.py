@@ -29,17 +29,26 @@ ALLOWED_HOSTS = []
 
 
 # Application definition
+# 장고에서 활성화 된 모든 장고 APP을 나타냄
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'rest_framework',
+    'channels',
     'search_app',
+    'chat',
+    'django.contrib.admin', #관리용 사이트
+    'django.contrib.auth', # 인증 시스템
+    'django.contrib.contenttypes', # 컨텐츠 타입을 위한 프레임워크
+    'django.contrib.sessions', # 세션 프레임워크
+    'django.contrib.messages', # 메세징 프레임워크
+    'django.contrib.staticfiles', # 정적 파일을 관리하는 프레임워크
+    'rest_framework',
+    
 ]
+
+# 예를들어 manage.py migrate 명령어를 실행하면
+# INSTALLED_APPS리스트 안의 App에서 제공되는 DB migrations와 settings.py의 DB설정에 따라 테이블이 생성된다.
+# Root 경로에 db.sqlite 생성
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -107,7 +116,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Seoul'
 
 USE_I18N = True
 
@@ -120,3 +129,15 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+
+# Channels
+ASGI_APPLICATION = 'server_project.routing.application'
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 6379)],
+        },
+    },
+}

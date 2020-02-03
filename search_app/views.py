@@ -1,6 +1,7 @@
 from django.shortcuts import render
-
+import json
 # Create your views here.
+# MVC 패턴에서 Conroller
 
 
 # Create your views here.
@@ -12,6 +13,7 @@ from rest_framework import status
   
 from elasticsearch import Elasticsearch  
   
+
   
 class SearchView(APIView):
 
@@ -42,6 +44,19 @@ class SearchView(APIView):
                                  "multi_match": {
                                      "query": search_word,
                                      "fields": ["content"]
+                                 }
+                             }
+                         })
+
+        elif request.query_params.get('test_search'):
+            search_word = request.query_params.get('test_search')
+            docs = es.search(index='menual',
+                         doc_type='menual_datas',
+                         body={
+                             "query": {
+                                 "multi_match": {
+                                     "query": search_word,
+                                     "fields": ["index"]
                                  }
                              }
                          })

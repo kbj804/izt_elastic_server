@@ -1,26 +1,5 @@
 [
 	{
-		"data_type": "table",
-		"content": [
-			[
-				"표현",
-				"의미"
-			],
-			[
-				"굵은 텍스트",
-				"사용자 명령어 및 User Interface menu"
-			],
-			[
-				"기울임 텍스트",
-				"직접 입력하는 text"
-			],
-			[
-				"|",
-				"선택 인자 구분"
-			]
-		]
-	},
-	{
 		"data_type": "string",
 		"main_title": "iGate 소개",
 		"sub_title": "iGate 소개",
