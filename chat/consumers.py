@@ -2,6 +2,7 @@
 from asgiref.sync import async_to_sync
 from channels.generic.websocket import WebsocketConsumer
 import json
+from search_app.tests import request_message
 
 class ChatConsumer(WebsocketConsumer):
     def connect(self):
@@ -37,11 +38,12 @@ class ChatConsumer(WebsocketConsumer):
             self.channel_name
         )
 
+
+    # 여기서 메세지 받으니까 여기서 DB에 저장하던가 하면 될거같고
     # Receive message from WebSocket
     def receive(self, text_data):
         text_data_json = json.loads(text_data)
         message = text_data_json['message']
-
         # Send message to room group
         '''
         그룹에게 이벤트를 보냅니다.
@@ -54,12 +56,28 @@ class ChatConsumer(WebsocketConsumer):
                 'message': message
             }
         )
+        
+    # AI 답변 함수 만들어서 여기 ai_message에 넣어주면 될듯 함
+    def ai_return(self, message):
+        ai_message = request_message(message)
+        return str(ai_message)
 
+
+    # 여기서 채팅 쏴주는건데 이거 좀 수정해서 답장 하는거 보여주면 될거같음 
     # Receive message from room group
     def chat_message(self, event):
         message = event['message']
-
+        
         # Send message to WebSocket
         self.send(text_data=json.dumps({
-            'message': message
+            'message': 'user : ' + message
+        }))
+
+        ai_message = self.ai_return(message)
+        
+
+
+        # AI 답장 같이 보냄 
+        self.send(text_data=json.dumps({
+            'message': 'AI : ' + ai_message
         }))
